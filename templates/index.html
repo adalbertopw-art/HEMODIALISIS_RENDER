@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Integral de Hemodiálisis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navegación -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat me-2"></i>
+                    Sistema de Hemodiálisis
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('dashboard')">
+                                <i class="fas fa-chart-dashboard me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('patients')">
+                                <i class="fas fa-users me-1"></i> Pacientes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('dialysis')">
+                                <i class="fas fa-syringe me-1"></i> Diálisis
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('anemia')">
+                                <i class="fas fa-tint me-1"></i> Anemia
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('mineral')">
+                                <i class="fas fa-bone me-1"></i> Mineral Óseo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('vascular')">
+                                <i class="fas fa-heart-pulse me-1"></i> Acceso Vascular
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenido Principal -->
+        <div class="container-fluid mt-4">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="content-section">
+                <div class="row">
+                    <div class="col-12">
+                        <h2><i class="fas fa-chart-dashboard me-2"></i>Dashboard Principal</h2>
+                    </div>
+                </div>
+
+                <!-- Métricas Principales -->
+                <div class="row mb-4">
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="card metric-card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="card-title">Pacientes Activos</h6>
+                                        <h3 id="total-patients">0</h3>
+                                    </div>
+                                    <i class="fas fa-users fa-2x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="card metric-card bg-danger text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="card-title">Alertas Críticas</h6>
+                                        <h3 id="critical-alerts">0</h3>
+                                    </div>
+                                    <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="card metric-card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="card-title">Alertas Moderadas</h6>
+                                        <h3 id="moderate-alerts">0</h3>
+                                    </div>
+                                    <i class="fas fa-exclamation-circle fa-2x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <div class="card metric-card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="card-title">Alertas Preventivas</h6>
+                                        <h3 id="preventive-alerts">0</h3>
+                                    </div>
+                                    <i class="fas fa-info-circle fa-2x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Centro de Alertas -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-bell me-2"></i>Centro de Alertas</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="alerts-container">
+                                    <div class="text-center text-muted">
+                                        <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                                        <p>Cargando alertas...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Section -->
+            <div id="patients-section" class="content-section" style="display: none;">
+                <div class="row">
+                    <div class="col-12">
+                        <h2><i class="fas fa-users me-2"></i>Gestión de Pacientes</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-user-plus me-2"></i>Nuevo Paciente</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="new-patient-form">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de Documento</label>
+                                        <select class="form-select" name="tipo_documento" required>
+                                            <option value="">Seleccionar</option>
+                                            <option value="CC">Cédula de Ciudadanía</option>
+                                            <option value="TI">Tarjeta de Identidad</option>
+                                            <option value="CE">Cédula de Extranjería</option>
+                                            <option value="PS">Pasaporte</option>
+                                            <option value="RC">Registro Civil</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Número de Documento</label>
+                                        <input type="text" class="form-control" name="documento" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombres</label>
+                                        <input type="text" class="form-control" name="nombres" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Apellidos</label>
+                                        <input type="text" class="form-control" name="apellidos" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Fecha de Nacimiento</label>
+                                        <input type="date" class="form-control" name="fecha_nacimiento" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Género</label>
+                                        <select class="form-select" name="genero" required>
+                                            <option value="">Seleccionar</option>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">EPS</label>
+                                        <select class="form-select" name="eps">
+                                            <option value="">Seleccionar EPS</option>
+                                            <option value="Nueva EPS">Nueva EPS</option>
+                                            <option value="Sanitas EPS">Sanitas EPS</option>
+                                            <option value="SURA EPS">SURA EPS</option>
+                                            <option value="Salud Total EPS">Salud Total EPS</option>
+                                            <option value="Compensar EPS">Compensar EPS</option>
+                                            <option value="Famisanar EPS">Famisanar EPS</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Fecha Inicio Hemodiálisis</label>
+                                        <input type="date" class="form-control" name="fecha_inicio_hd" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Causa de ERC</label>
+                                        <select class="form-select" name="causa_erc">
+                                            <option value="Diabetes Mellitus tipo 2">Diabetes Mellitus tipo 2</option>
+                                            <option value="Nefropatía hipertensiva">Nefropatía hipertensiva</option>
+                                            <option value="Glomerulonefritis crónica">Glomerulonefritis crónica</option>
+                                            <option value="Enfermedad renal poliquística">Enfermedad renal poliquística</option>
+                                            <option value="Causa desconocida">Causa desconocida</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-save me-2"></i>Registrar Paciente
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-list me-2"></i>Lista de Pacientes</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="search-patients" placeholder="Buscar por nombre, documento o ID...">
+                                </div>
+                                <div id="patients-table">
+                                    <div class="text-center text-muted">
+                                        <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                                        <p>Cargando pacientes...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Otras secciones permanecen ocultas inicialmente -->
+            <div id="dialysis-section" class="content-section" style="display: none;">
+                <h2><i class="fas fa-syringe me-2"></i>Sesiones de Diálisis</h2>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Módulo en desarrollo - Próximamente disponible
+                </div>
+            </div>
+
+            <div id="anemia-section" class="content-section" style="display: none;">
+                <h2><i class="fas fa-tint me-2"></i>Manejo de Anemia</h2>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Módulo en desarrollo - Próximamente disponible
+                </div>
+            </div>
+
+            <div id="mineral-section" class="content-section" style="display: none;">
+                <h2><i class="fas fa-bone me-2"></i>Enfermedad Mineral Ósea</h2>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Módulo en desarrollo - Próximamente disponible
+                </div>
+            </div>
+
+            <div id="vascular-section" class="content-section" style="display: none;">
+                <h2><i class="fas fa-heart-pulse me-2"></i>Acceso Vascular</h2>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Módulo en desarrollo - Próximamente disponible
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+</html>

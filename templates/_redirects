@@ -1,0 +1,6 @@
+# Redirects for Cloudflare Pages
+# Todas las rutas de API van a Functions
+/api/* /api/:splat 200
+
+# SPA routing - todas las rutas van al index.html
+/* /index.html 200
